@@ -1,6 +1,7 @@
-/* Fancy calculator styling with theme toggle and accent color */
+/* Simple, mobile‑first calculator styling */
 :root {
   --accent: #ff9800; /* default orange */
+  --accent-dark: #c66900; /* fallback darkened accent */
   --bg-light: #f0f2f5;
   --bg-dark: #1e1e1e;
   --text-light: #333;
@@ -67,10 +68,10 @@ body.dark {
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 360px;
-  max-width: 95vw;
+  width: 90vw;
+  max-width: 360px;
   padding: 1rem;
-  position: relative; /* for internal positioning */
+  position: relative;
   transition: background 0.3s;
 }
 
@@ -127,30 +128,16 @@ button.equal {
 
 button.zero { grid-column: span 2; }
 
+/* Mobile adjustments */
 @media (max-width: 400px) {
-  /* mobile adjustments remain */
-}
-
-/* PC / larger screen enhancements */
-@media (min-width: 768px) {
-  .calculator {
-    width: 420px;
-  }
-  #display {
-    font-size: 2.5rem;
-  }
-  button {
-    font-size: 1.5rem;
-    padding: 1rem;
-  }
-}
-
-  .calculator { width: 100%; }
+  .calculator { width: 100%; max-width: 320px; }
   #display { font-size: 1.5rem; }
   button { font-size: 1rem; padding: 0.6rem; }
 }
 
-/* Simple utility to darken a color (fallback for browsers without CSS vars calc) */
-@function darken($color, $percent) {
-  @return $color; /* placeholder – real darken handled via JS */
+/* Larger screens (PC) */
+@media (min-width: 768px) {
+  .calculator { max-width: 460px; }
+  #display { font-size: 2.5rem; }
+  button { font-size: 1.5rem; padding: 1rem; }
 }
