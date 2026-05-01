@@ -3,13 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simple Calculator</title>
+  <title>Fancy Calculator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="theme-toggle">
+    <label for="theme-switch">🌙</label>
+    <input type="checkbox" id="theme-switch" />
+    <label for="color-picker">🎨</label>
+    <input type="color" id="color-picker" value="#ff9800" title="Pick accent color" />
+  </div>
   <div class="calculator">
     <input type="text" id="display" readonly />
     <div class="buttons">

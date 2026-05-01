@@ -40,4 +40,47 @@
       if (value !== undefined) return append(value);
     });
   });
+  // Theme & accent handling
+  const themeSwitch = document.getElementById('theme-switch');
+  const colorPicker = document.getElementById('color-picker');
+
+  const setAccent = (color) => {
+    document.documentElement.style.setProperty('--accent', color);
+    // Simple darken: reduce each RGB component by 20%
+    const rgb = hexToRgb(color);
+    const dark = `rgb(${Math.floor(rgb.r * 0.8)}, ${Math.floor(rgb.g * 0.8)}, ${Math.floor(rgb.b * 0.8)})`;
+    document.documentElement.style.setProperty('--accent-dark', dark);
+  };
+
+  const hexToRgb = (hex) => {
+    const clean = hex.replace('#', '');
+    const bigint = parseInt(clean, 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return { r, g, b };
+  };
+
+  // Init accent from picker value
+  setAccent(colorPicker.value);
+
+  colorPicker.addEventListener('input', (e) => setAccent(e.target.value));
+
+  // Theme toggle
+  const applyTheme = (dark) => {
+    if (dark) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  };
+
+  themeSwitch.addEventListener('change', (e) => applyTheme(e.target.checked));
+
+  // Initialize based on stored preference (optional)
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    themeSwitch.checked = true;
+    applyTheme(true);
+  }
+
 })();

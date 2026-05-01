@@ -1,12 +1,66 @@
-/* Simple, mobile‑first calculator styling */
+/* Fancy calculator styling with theme toggle and accent color */
+:root {
+  --accent: #ff9800; /* default orange */
+  --bg-light: #f0f2f5;
+  --bg-dark: #1e1e1e;
+  --text-light: #333;
+  --text-dark: #eee;
+}
+
 html, body {
   height: 100%;
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  background: #f0f2f5;
+  background: var(--bg-light);
+  color: var(--text-light);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Dark mode */
+body.dark {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.theme-toggle input[type="checkbox"] {
+  width: 40px;
+  height: 20px;
+  appearance: none;
+  background: #ccc;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.3s;
+}
+.theme-toggle input[type="checkbox"]:checked {
+  background: #555;
+}
+.theme-toggle input[type="checkbox"]::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  top: 1px;
+  left: 1px;
+  transition: transform 0.3s;
+}
+.theme-toggle input[type="checkbox"]:checked::after {
+  transform: translateX(20px);
 }
 
 .calculator {
@@ -16,7 +70,11 @@ html, body {
   width: 360px;
   max-width: 95vw;
   padding: 1rem;
+  position: relative; /* for internal positioning */
+  transition: background 0.3s;
 }
+
+body.dark .calculator { background: #2c2c2c; }
 
 #display {
   width: 100%;
@@ -26,7 +84,10 @@ html, body {
   text-align: right;
   border: 1px solid #ddd;
   border-radius: 6px;
+  background: #fafafa;
+  transition: background 0.3s, border-color 0.3s;
 }
+body.dark #display { background: #3a3a3a; border-color: #555; }
 
 .buttons {
   display: grid;
@@ -40,22 +101,23 @@ button {
   border: none;
   border-radius: 6px;
   background: #e0e0e0;
+  color: #000;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: transform 0.1s, background 0.2s;
 }
 
 button:hover {
   background: #d5d5d5;
 }
 
+button:active { transform: scale(0.96); }
+
 button.op {
-  background: #ff9800;
+  background: var(--accent);
   color: #fff;
 }
 
-button.op:hover {
-  background: #fb8c00;
-}
+button.op:hover { background: var(--accent-dark); }
 
 button.equal {
   background: #4caf50;
@@ -63,12 +125,15 @@ button.equal {
   grid-row: span 2;
 }
 
-button.zero {
-  grid-column: span 2;
-}
+button.zero { grid-column: span 2; }
 
 @media (max-width: 400px) {
   .calculator { width: 100%; }
   #display { font-size: 1.5rem; }
   button { font-size: 1rem; padding: 0.6rem; }
+}
+
+/* Simple utility to darken a color (fallback for browsers without CSS vars calc) */
+@function darken($color, $percent) {
+  @return $color; /* placeholder – real darken handled via JS */
 }
